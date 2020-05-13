@@ -1,26 +1,26 @@
 import random
 
 
-def hire_assistant(n):
+def hire_assistant(candidates):
     best = 0
-    hire = None
+    hire = None  # index of candidates
     cnt = 0
-    for i in range(len(n)):
-        if n[i] > best:
-            best = n[i]
+    for i in range(len(candidates)):
+        if candidates[i] > best:
+            best = candidates[i]
             cnt += 1
             hire = i
     return cnt, hire
 
 
-def hire_assistant_random(n):
+def hire_assistant_random(candidates):
     random.shuffle(n)
     best = 0
     hire = None
     cnt = 0
-    for i in range(len(n)):
+    for i in range(len(candidates)):
         if n[i] > best:
-            best = n[i]
+            best = candidates[i]
             cnt += 1
             hire = i
     return cnt, hire
@@ -62,5 +62,5 @@ def hire_experiment():
 
 
 if __name__ == '__main__':
-    # hire_assistant_test()
+    hire_assistant_test()
     hire_experiment()
