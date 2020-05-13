@@ -13,6 +13,19 @@ def hire_assistant(n):
     return cnt, hire
 
 
+def hire_assistant_random(n):
+    random.shuffle(n)
+    best = 0
+    hire = None
+    cnt = 0
+    for i in range(len(n)):
+        if n[i] > best:
+            best = n[i]
+            cnt += 1
+            hire = i
+    return cnt, hire
+
+
 def hire_assistant_test():
     # prepare data
     N = 30  # size of candidates
