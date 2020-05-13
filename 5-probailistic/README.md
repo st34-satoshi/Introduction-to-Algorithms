@@ -2,3 +2,8 @@
 
 ## 5.1 The hiring problem
 `python hiring.py`
+
+## 5.4.2 Birthday paradox
+`python birthday`
+
+![graph](./com-p-i.png)
