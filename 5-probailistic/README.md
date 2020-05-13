@@ -5,5 +5,3 @@
 
 ## 5.4.2 Birthday paradox
 `python birthday`
-
-![graph](./com-p-i.png)
