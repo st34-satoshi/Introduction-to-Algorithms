@@ -5,7 +5,7 @@ def probabilistic_solution(y):
     q = 1  # probability no pair
     i = 0  # the number of people
     p = 0.5
-    while(q > 1-p):
+    while q > 1-p:
         i += 1
         q *= (y-i+1)/y
     return i
@@ -39,7 +39,7 @@ def indicator_solution_test():
     Y = 365
     # Y = 669
     print(f"Y = {Y}")
-    print(f"indicato answer = {indicator_solution(Y)}")
+    print(f"indicator answer = {indicator_solution(Y)}")
 
 
 def graph():
