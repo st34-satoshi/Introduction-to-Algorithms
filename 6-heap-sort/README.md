@@ -4,5 +4,3 @@
 `python heapi.py`
 
 
-![graph](./com-p-i.png)
-
