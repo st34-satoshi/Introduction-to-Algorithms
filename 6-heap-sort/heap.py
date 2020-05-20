@@ -34,11 +34,25 @@ def build_max_heap(numbers):
         max_heapify(numbers, i)
 
 
+def heap_sort(inp):
+    numbers = [n for n in inp]
+    build_max_heap(numbers)
+    size = len(numbers)
+    for i in reversed(range(1, size)):
+        numbers[0], numbers[i] = numbers[i], numbers[0]
+        inp[i] = numbers.pop(-1)
+        max_heapify(numbers, 0)
+    inp[0] = numbers[0]
+
+
 if __name__ == '__main__':
     N = 10
     A = gen_list(N)
     print("before ")
     print(A)
     build_max_heap(A)
-    print("after")
+    print("built max heap")
+    print(A)
+    heap_sort(A)
+    print("sorted")
     print(A)
