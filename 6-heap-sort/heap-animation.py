@@ -20,10 +20,18 @@ def max_heapify(numbers, i, ga=None):
     l, r = left_right(i)
     size = len(numbers)
     largest = i
-    if l < size and numbers[l] > numbers[largest]:
-        largest = l
+    if ga is not None and r < size:
+        ga.highlight_node(r+1, "green")
+        ga.highlight_node(largest+1, "green")
+        ga.next_step()
     if r < size and numbers[r] > numbers[largest]:
         largest = r
+    if ga is not None and l < size:
+        ga.highlight_node(l+1, "green")
+        ga.highlight_node(largest+1, "green")
+        ga.next_step()
+    if l < size and numbers[l] > numbers[largest]:
+        largest = l
     if largest != i:
         numbers[i], numbers[largest] = numbers[largest], numbers[i]
         if ga is not None:

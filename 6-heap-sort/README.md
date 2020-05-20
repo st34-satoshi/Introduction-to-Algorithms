@@ -4,7 +4,7 @@
 - `python heapi.py`
 
 ### with animation
-- `python heapi-animation.py`
+- `python heap-animation.py`
 
 ![building animation](./figure/building-heap.gif)
 
