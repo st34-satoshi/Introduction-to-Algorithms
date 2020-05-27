@@ -16,7 +16,7 @@ def counting_sort(numbers, max_number):
         c[i] += c[i-1]
     print(c)
     ans = [0]*len(numbers)
-    for i in range(len(numbers)):
+    for i in reversed(range(len(numbers))):
         ans[c[numbers[i]]-1] = numbers[i]
         c[numbers[i]] -= 1
     return ans
