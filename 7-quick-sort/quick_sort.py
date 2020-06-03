@@ -1,5 +1,6 @@
 import random
 
+
 def partition(A, p, r):
     x = A[r]
     i = p - 1
@@ -11,9 +12,16 @@ def partition(A, p, r):
     return i + 1
 
 
+def random_partition(A, p, r):
+    i = random.randint(p, r)
+    A[i], A[r] = A[r], A[i]
+    return partition(A, p, r)
+
+
 def quick_sort(A, p, r):
     if p < r:
-        q = partition(A, p, r)
+        # q = partition(A, p, r)  # use this if you do not want random
+        q = random_partition(A, p, r)
         quick_sort(A, p, q-1)
         quick_sort(A, q+1, r)
 
