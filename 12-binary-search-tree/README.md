@@ -28,3 +28,6 @@ compare ordered numbers and random numbers
 `python animation.py`
 
 ![fig](figure/gif-anim.gif)
+
+## find all possible arrays that can build the same tree
+`python possible_arrays.py`
