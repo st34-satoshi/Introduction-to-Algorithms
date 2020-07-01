@@ -23,3 +23,8 @@ compare ordered numbers and random numbers
 `python compare-time.py`  
 
 ![fig](figure/creating-tree-time.png)
+
+## creating and deleting tree animation
+`python animation.py`
+
+![fig](figure/gif-anim.gif)
