@@ -1,4 +1,6 @@
 import copy
+import numpy as np
+from itertools import combinations
 
 
 class Node:
@@ -97,24 +99,24 @@ def solve2(root):
     answers = []
     for l_array in l_arrays:
         for r_array in r_arrays:
-            combine_arrays(l_array, 0, r_array, 0, [root.key], answers)
+            answers.extend(combine_arrays(l_array, r_array, root.key))
     return answers
 
 
-def combine_arrays(l_array, l_index, r_array, r_index, current, answers):
-    if len(l_array) == l_index and len(r_array) == r_index:
-        # both array are empty
-        answers.append(copy.deepcopy(current))
-        return
-    # select l or r
-    if len(l_array) > l_index:
-        c = copy.deepcopy(current)
-        c.append(l_array[l_index])
-        combine_arrays(l_array, l_index+1, r_array, r_index, c, answers)
-    if len(r_array) > r_index:
-        c = copy.deepcopy(current)
-        c.append(r_array[r_index])
-        combine_arrays(l_array, l_index, r_array, r_index+1, c, answers)
+# def combine_arrays(l_array, l_index, r_array, r_index, current, answers):
+def combine_arrays(a, b, r):
+    result = []
+    n = len(a) + len(b)
+    for indA in combinations(range(n), len(a)):
+        x = np.zeros(n, dtype=int)
+        mask = np.zeros(n, dtype=bool)
+        mask[indA,] = True    # The ',' is important here for indexing
+        x[mask] = a
+        x[~mask] = b
+        x = list(x)
+        x.insert(0, r)
+        result.append(x)
+    return result
 
 
 if __name__ == '__main__':
