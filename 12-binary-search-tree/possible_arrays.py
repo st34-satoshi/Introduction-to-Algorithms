@@ -67,9 +67,67 @@ def choose(choices, record, chosen):
         answer1.append(record)
 
 
+def solution2(numbers):
+    # solve recursively
+
+    # building a tree
+    root = gen_tree(numbers)
+    answer = solve2(root)
+    return answer
+
+
+def solve2(root):
+    # return the answer of the partial tree
+    if root is None:
+        return []
+    l_arrays = solve2(root.left)
+    r_arrays = solve2(root.right)
+    if len(l_arrays) == 0 and len(r_arrays) == 0:
+        return [[root.key]]
+    if len(l_arrays) == 0:
+        for arr in r_arrays:
+            arr.insert(0, root.key)
+        return r_arrays
+    if len(r_arrays) == 0:
+        for arr in l_arrays:
+            arr.insert(0, root.key)
+        return l_arrays
+
+    # combine both r and l answers. the first element is this node
+    answers = []
+    for l_array in l_arrays:
+        for r_array in r_arrays:
+            combine_arrays(l_array, 0, r_array, 0, [root.key], answers)
+    return answers
+
+
+def combine_arrays(l_array, l_index, r_array, r_index, current, answers):
+    if len(l_array) == l_index and len(r_array) == r_index:
+        # both array are empty
+        answers.append(copy.deepcopy(current))
+        return
+    # select l or r
+    if len(l_array) > l_index:
+        c = copy.deepcopy(current)
+        c.append(l_array[l_index])
+        combine_arrays(l_array, l_index+1, r_array, r_index, c, answers)
+    if len(r_array) > r_index:
+        c = copy.deepcopy(current)
+        c.append(r_array[r_index])
+        combine_arrays(l_array, l_index, r_array, r_index+1, c, answers)
+
+
 if __name__ == '__main__':
     # input_numbers = [4, 2, 1, 3, 5]
     input_numbers = [4, 2, 1, 3, 6, 5, 7]
     solution1(input_numbers)
     print(answer1)
     print(len(answer1))
+    ans2 = solution2(input_numbers)
+    print(ans2)
+    print(len(ans2))
+    if len(answer1) != len(ans2):
+        print("incorrect")
+    for a1 in answer1:
+        if a1 not in ans2:
+            print("incorrect")
