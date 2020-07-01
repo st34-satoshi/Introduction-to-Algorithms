@@ -17,3 +17,9 @@ successor(), predecessor() function in binary-search-tree.py
 
 ## delete
 sample_delete() function in binary-search-tree.py
+
+## creating tree time
+compare ordered numbers and random numbers  
+`python compare-time.py`  
+
+![fig](figure/creating-tree-time.png)
