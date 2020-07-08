@@ -13,8 +13,6 @@ class Node:
 
     def set_right(self, n):
         self.right = n
-        if n.key == 9 and self.key == 6:
-            print("hoge")
 
     def set_left(self, n):
         self.left = n
@@ -86,10 +84,7 @@ def right_rotate(root, x):
 def rb_insert_fixup(root, z):
     # z is a new node. the color is red at first
     while z.parent is not None and z.parent.color == 'red':
-        if z.parent is z.parent.parent.left:
-            root, z = rb_insert_fixup_recover(root, z, True)
-        else:
-            root, z = rb_insert_fixup_recover(root, z, False)
+        root, z = rb_insert_fixup_recover(root, z, z.parent is z.parent.parent.left)
     root.color = 'black'
     return root
 
@@ -133,12 +128,97 @@ def rb_insert(root, z):
     return root
 
 
+def rb_transplant(root, u, v):
+    if u.parent is None:
+        root = v
+    elif u is u.parent.left:
+        u.parent.set_left(v)
+    else:
+        u.parent.set_right(v)
+    v.parent = u.parent
+    return root
+
+
+def tree_minimum(root):
+    x = root
+    while not x.left.is_none():
+        x = x.left
+    return x
+
+
+def tree_find(root, k):
+    if root is None or k == root.key:
+        return root
+    if k < root.key:
+        return tree_find(root.left, k)
+    return tree_find(root.right, k)
+
+
+def rb_delete_fixup(root, x):
+    while x is not root and x.color == 'black':
+        root, x = rb_delete_fixup_recover(root, x, x is x.parent.left)
+    x.color = 'black'
+    return root
+
+
+def rb_delete_fixup_recover(root, x, left):
+    w = x.parent.child(not left)
+    if w.color == 'red':
+        w.color = 'black'
+        x.parent.color = 'red'
+        root = left_rotate(root, x.parent) if left else right_rotate(root, x.parent)
+        w = x.parent.child(not left)
+    if w.left.color == 'black' and w.right.color == 'black':
+        w.color = 'red'
+        x = x.parent
+    else:
+        if w.child(not left).color == 'black':
+            w.child(left).color = 'black'
+            w.color = 'red'
+            root = right_rotate(root, w) if left else left_rotate(root, w)
+            w = x.parent.child(not left)
+        w.color = x.parent.color
+        x.parent.color = 'black'
+        w.child(not left).color = 'black'
+        root = left_rotate(root, x.parent) if left else right_rotate(root, x.parent)
+        x = root
+
+    return root, x
+
+
+def rb_delete(root, z):
+    y = z
+    y_origin_color = y.color
+    if z.left.is_none():
+        x = z.right
+        root = rb_transplant(root, z, z.right)
+    elif z.right.is_none():
+        x = z.left
+        root = rb_transplant(root, z, z.left)
+    else:
+        y = tree_minimum(z.right)
+        y_origin_color = y.color
+        x = y.right
+        if y.parent is z:
+            x.parent = z
+        else:
+            root = rb_transplant(root, y, y.right)
+            y.set_right(z.right)
+            y.right.parent = y
+        root = rb_transplant(root, z, y)
+        y.set_left(z.left)
+        y.left.parent = y
+        y.color = z.color
+    if y_origin_color == 'black' and not x.is_none():
+        root = rb_delete_fixup(root, x)
+    return root
+
+
 def gen_numbers(size):
     return random.sample(list(range(size)), size)
 
 
 def insert_test():
-    # NoneNode = Node(-1, color='black')
     # numbers = gen_numbers(10)
     numbers = [5, 2, 6, 8, 0, 9, 1, 3, 4, 7]
     root = None
@@ -147,11 +227,18 @@ def insert_test():
         graph(root, 'graph/create'+str(i))
 
 
+def delete_test():
+    # numbers = gen_numbers(10)
+    numbers = [5, 2, 6, 8, 0, 9, 1, 3, 4, 7]
+    root = None
+    for i, n in enumerate(numbers):
+        root = rb_insert(root, Node(n, none_node=NoneNode))
+
+    for i, n in enumerate(numbers):
+        root = rb_delete(root, tree_find(root, n))
+        graph(root, 'graph/delete'+str(i))
+
+
 if __name__ == '__main__':
-    # a = Node(1)
-    # b = Node(2)
-    # b.parent = a
-    # a.right = b
-    # graph(a)
-    # for _ in range(10):
     insert_test()
+    # delete_test()
