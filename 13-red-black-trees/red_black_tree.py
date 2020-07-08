@@ -162,24 +162,24 @@ def rb_delete_fixup(root, x):
 
 
 def rb_delete_fixup_recover(root, x, left):
-    w = x.parent.child(not left)
+    w = x.parent.child(left)
     if w.color == 'red':
         w.color = 'black'
         x.parent.color = 'red'
         root = left_rotate(root, x.parent) if left else right_rotate(root, x.parent)
-        w = x.parent.child(not left)
+        w = x.parent.child(left)
     if w.left.color == 'black' and w.right.color == 'black':
         w.color = 'red'
         x = x.parent
     else:
-        if w.child(not left).color == 'black':
-            w.child(left).color = 'black'
+        if w.child(left).color == 'black':
+            w.child(not left).color = 'black'
             w.color = 'red'
             root = right_rotate(root, w) if left else left_rotate(root, w)
-            w = x.parent.child(not left)
+            w = x.parent.child(left)
         w.color = x.parent.color
         x.parent.color = 'black'
-        w.child(not left).color = 'black'
+        w.child(left).color = 'black'
         root = left_rotate(root, x.parent) if left else right_rotate(root, x.parent)
         x = root
 
@@ -209,7 +209,7 @@ def rb_delete(root, z):
         y.set_left(z.left)
         y.left.parent = y
         y.color = z.color
-    if y_origin_color == 'black' and not x.is_none():
+    if y_origin_color == 'black':
         root = rb_delete_fixup(root, x)
     return root
 
