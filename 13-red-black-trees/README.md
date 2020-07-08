@@ -7,6 +7,8 @@
 ### insert a node
 `insert_test()` function. you can see the graph in the graph directory
 
+[5, 2, 6, 8, 0, 9, 1, 3, 4, 7]
+
 ![0](./graph/create0.png)
 ![1](./graph/create1.png)
 ![2](./graph/create2.png)
@@ -21,6 +23,8 @@
 
 ### delete a node
 `delete_test()` function. you can see the graph in the graph directory
+
+[5, 2, 6, 8, 0, 9, 1, 3, 4, 7]
 
 ![0](./graph/delete0.png)
 ![1](./graph/delete1.png)
