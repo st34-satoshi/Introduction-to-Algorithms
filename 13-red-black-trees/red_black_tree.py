@@ -200,7 +200,7 @@ def rb_delete(root, z):
         y_origin_color = y.color
         x = y.right
         if y.parent is z:
-            x.parent = z
+            x.parent = y
         else:
             root = rb_transplant(root, y, y.right)
             y.set_right(z.right)
@@ -229,16 +229,18 @@ def insert_test():
 
 def delete_test():
     # numbers = gen_numbers(10)
-    numbers = [5, 2, 6, 8, 0, 9, 1, 3, 4, 7]
+    # numbers = [5, 2, 6, 8, 0, 9, 1, 3, 4, 7]
+    numbers = [5, 2, 6, 8, 0, 7, 9, 1, 3, 4]
     root = None
     for i, n in enumerate(numbers):
         root = rb_insert(root, Node(n, none_node=NoneNode))
 
+    # numbers = [5, 2, 6, 8, 0, 7, 9, 1, 3, 4]
     for i, n in enumerate(numbers):
         root = rb_delete(root, tree_find(root, n))
         graph(root, 'graph/delete'+str(i))
 
 
 if __name__ == '__main__':
-    insert_test()
-    # delete_test()
+    # insert_test()
+    delete_test()
