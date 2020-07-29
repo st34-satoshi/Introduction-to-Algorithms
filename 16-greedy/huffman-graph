@@ -1,24 +1,24 @@
 // Huffman tree
 graph {
-	100
-	a45
-	100 -- a45 [label=0]
-	55
-	100 -- 55 [label=1]
-	25
-	55 -- 25 [label=0]
-	c12
-	25 -- c12 [label=0]
-	b13
-	25 -- b13 [label=1]
-	30
-	55 -- 30 [label=1]
-	14
-	30 -- 14 [label=0]
-	f5
-	14 -- f5 [label=0]
-	e9
-	14 -- e9 [label=1]
-	d16
-	30 -- d16 [label=1]
+	"acbfed(100)"
+	"a(45),0"
+	"acbfed(100)" -- "a(45),0" [label=0]
+	"cbfed(55)"
+	"acbfed(100)" -- "cbfed(55)" [label=1]
+	"cb(25)"
+	"cbfed(55)" -- "cb(25)" [label=0]
+	"c(12),100"
+	"cb(25)" -- "c(12),100" [label=0]
+	"b(13),101"
+	"cb(25)" -- "b(13),101" [label=1]
+	"fed(30)"
+	"cbfed(55)" -- "fed(30)" [label=1]
+	"fe(14)"
+	"fed(30)" -- "fe(14)" [label=0]
+	"f(5),1100"
+	"fe(14)" -- "f(5),1100" [label=0]
+	"e(9),1101"
+	"fe(14)" -- "e(9),1101" [label=1]
+	"d(16),111"
+	"fed(30)" -- "d(16),111" [label=1]
 }

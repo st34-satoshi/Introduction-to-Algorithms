@@ -3,11 +3,11 @@ from graphviz import Graph
 
 
 # Node of huffman tree
-class Letter:
+class Node:
 
-    def __init__(self, num, c, left=None, right=None):
+    def __init__(self, num, letter, left=None, right=None):
         self.number = num
-        self.c = c  # sometimes combination of letters
+        self.letter = letter  # sometimes combination of letters. eg) a, b, c, ..., fe, fed, ...
         self.left = left  # left is smaller than right
         self.right = right
         self.code = ''  # added after creating tree
@@ -16,7 +16,7 @@ class Letter:
         return self.number < other.number
 
     def __str__(self):
-        return f'{self.c}({self.number}) code = {self.code}'
+        return f'{self.letter}({self.number}) code = {self.code}'
         # return f'number={self.number}, c={self.c}, code={self.code}'
 
     def set_code(self, previous):
@@ -35,8 +35,8 @@ class Letter:
 
     def node_name(self):
         if self.left is not None:  # and right is not None
-            return str(self.number)
-        return self.c+''+str(self.number)
+            return self.letter+'('+str(self.number)+')'
+        return self.letter+'('+str(self.number)+')'+','+self.code
 
     def graph(self, dot, parent, code):
         # code is 0 if left, code is 1 if right
@@ -54,24 +54,29 @@ class Letter:
             dot.render("huffman-graph")
 
 
-def solve(letters):
+def solve(nodes):
     # create tree
-    while len(letters) >= 2:
-        x = heapq.heappop(letters)
-        y = heapq.heappop(letters)
-        le = Letter(x.number+y.number, x.c+y.c, x, y)
-        heapq.heappush(letters, le)
-    root = letters[0]
+    while len(nodes) >= 2:  # n-1 times
+        x = heapq.heappop(nodes)
+        y = heapq.heappop(nodes)
+        n = Node(x.number+y.number, x.letter+y.letter, x, y)
+        heapq.heappush(nodes, n)
+    root = nodes[0]
     # decide the code
     root.set_code('')
     return root
 
 
 if __name__ == '__main__':
+    # make a input
     a = [('a', 45), ('b', 13), ('c', 12), ('d', 16), ('e', 9), ('f', 5)]
-    a = [Letter(l[1], l[0]) for l in a]
+    a = [Node(l[1], l[0]) for l in a]
     heapq.heapify(a)
+
+    # solve
     ans = solve(a)  # ans is the root of huffman tree
+
+    # print answer
     ans.print()
     # make a graph
     graph = Graph(comment="Huffman tree", format="png")
